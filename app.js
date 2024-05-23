@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 const routes = require('./routes'); // 중앙 라우트 파일 가져오기
 const app = express();
 const dotenv = require('dotenv');
-const port = process.env.APP_PORT;
 
-// 현재 환경을 가져옵니다. 기본값은 'development'입니다.
 const env = process.env.NODE_ENV || 'development';
 
 // 환경별로 적절한 .env 파일을 로드합니다.
@@ -14,6 +12,9 @@ if (env === 'production') {
 } else {
   dotenv.config({ path: '.env.local' });
 }
+const port = process.env.APP_PORT;
+
+// 현재 환경을 가져옵니다. 기본값은 'development'입니다.
 
 app.use(express.json()); // JSON 요청 바디를 파싱
 
@@ -23,10 +24,10 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('Connection error:', error));
 
-// // 기본 라우트 (원형)
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
+// 기본 라우트 (원형)
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 // // 라우트 설정 (수정)
 // app.use('/', homeRoutes);
@@ -65,3 +66,5 @@ app.use('/', routes);
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+
+// test
